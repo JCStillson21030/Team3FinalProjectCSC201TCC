@@ -1,0 +1,80 @@
+Al Pacino
+432567812
+M
+1953/10/21
+69.25
+174.23
+Jack Pacino
+Kate Kardashian
+Robert DeNiro
+546132876
+M
+1958/08/30
+69.57
+186.84
+Patrick DeNiro
+Martha DeNiro
+Sandra Bullock
+578356840
+F
+1964/05/07
+62.77
+153.62
+Guy Brando
+Mae Brando
+Bob Wellington
+432211234
+M
+1931/11/15
+76.42
+140.24
+Jim Wellington
+Joan Wellington
+Angela Basset
+100325486
+F
+1985/01/30
+56.57
+101.81
+DeShawn Basset
+Queen Latifah
+Marlon Brando
+987125432
+M
+1961/04/13
+64.27
+234.78
+Guy Brando
+Mae Brando
+Robert Carlyle
+576532876
+M
+1958/08/30
+69.57
+186.84
+Anthony Caryle
+Marianne Hopkins
+Alec Guinness
+368356840
+F
+1964/05/07
+62.77
+153.62
+Patrick DeNiro
+Martha DeNiro
+Mike Myers
+499211234
+M
+1931/11/15
+76.42
+140.24
+Mick Jagger
+Juanita
+Emma Thompson
+125325486
+F
+1985/01/30
+56.57
+101.81
+Patrick DeNiro
+Martha DeNiro
