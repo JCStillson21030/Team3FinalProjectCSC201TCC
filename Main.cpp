@@ -166,9 +166,9 @@ person* head = new person; // independent person
         getline( fMovStar, fLine); 
         current->weight = stof(fLine);
         getline( fMovStar, fLine); 
-        current->fName = fLine;
+        current->fSSN = fLine;
         getline( fMovStar, fLine); 
-        current->mName = fLine;
+        current->mSSN = fLine;
         
         newPerson = new person; // independent person 
         current->next = newPerson; // linking persons 
