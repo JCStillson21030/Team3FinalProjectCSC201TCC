@@ -140,7 +140,63 @@ void findRelatives(){
 }
 
 int main(){
+//First priority will be to program a Linked List within the main for each one of the funtions to refernce. 
 
+person* head = new person; // independent person 
+    head->next = NULL; 
+    
+    person* current = head; person* newPerson ;  
+    // assign data values 
+    string fLine;
+    ifstream fMovStar;
+    fMovStar.open("listofpeople.txt"); 
+    
+    while (!fMovStar.eof()){
+        
+        getline( fMovStar, fLine); 
+        current->pname = fLine;
+        getline( fMovStar, fLine); 
+        current->SSN = stol(fLine);
+        getline( fMovStar, fLine); 
+        current->gender = fLine[0];
+        getline( fMovStar, fLine); 
+        current->DOB = fLine;
+        getline( fMovStar, fLine); 
+        current->height = stof(fLine);
+        getline( fMovStar, fLine); 
+        current->weight = stof(fLine);
+        getline( fMovStar, fLine); 
+        current->fName = fLine;
+        getline( fMovStar, fLine); 
+        current->mName = fLine;
+        
+        newPerson = new person; // independent person 
+        current->next = newPerson; // linking persons 
+        current = newPerson; 
+        
+    }
+    
+    fMovStar.close(); 
+    
+    current = head; person* prevPerson ;  
+    while (current->next != NULL){  // (current != null) vs. (current->next != NULL)
+        prevPerson = current;
+        current = current->next;
+    } 
+    
+    prevPerson->next = NULL; 
+    delete newPerson; 
+    
+    current = head; 
+    
+    // display 
+    while (current != NULL){
+        cout << current->pname << " | " << current->SSN << " | " << current->gender << " | " << current->DOB << " | " 
+        << current->height << " | " << current->weight << " | " << current->fName << " | "  << current->mName << " | " <<  endl ;
+        current = current->next; 
+    }
+
+    current = head; 
 int choice;
 
 cout << "Choose a function." << endl << endl;
