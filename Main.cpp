@@ -1,11 +1,13 @@
 #include <iostream>
+#include <string>
+#include <fstream>
 using namespace std;
 
 
 //------------Person Struct-----------
 struct person{  // define the UDT 
     
-    string pName;
+    string pname;
     long pSSN; 
 
     char gender; 
@@ -16,13 +18,80 @@ struct person{  // define the UDT
     
     long fSSN;
     long mSSN;
-//-------------------------------------    
-
+    
     person* next;
+//-------------------------------------    
 };
 
 
 void displayPersons(){
+    
+    int pcount = 0; string fLine; int linecount;
+
+    ifstream people;
+    people.open("people.txt");
+    
+    while(!people.eof())    
+    {
+        getline(people, fLine);
+        linecount++;
+    }
+    
+    people.close();
+    person Persons[linecount]; 
+    people.open("people.txt");
+
+    while(!people.eof()){
+
+    getline( people, fLine);
+    Persons[pcount].pname = fLine;
+    getline( people, fLine);
+    Persons[pcount].SSN = stol(fLine);
+    getline( people, fLine);
+    Persons[pcount].gender = fLine[0];
+    getline( people, fLine);
+    Persons[pcount].DOB = fLine;
+    getline( people, fLine);
+    Persons[pcount].height = stof(fLine);
+    getline( people, fLine);
+    Persons [pcount].weight = stof(fLine);
+    getline( people, fLine);
+    Persons[pcount].fSSN = stol(fLine);
+    getline( people, fLine);
+    Persons[pcount].mSSN = stol(fLine);
+
+     pcount++;
+    }
+
+    float tmp2;
+    string tmp3;
+    ofstream myOpFile;
+    //bubble sort
+    for(int j = 0; j < pcount; j++)
+    {
+        for (int i = 1; i < pcount; i++)
+        {
+            if (Persons[i].SSN < Persons[i - 1].SSN)
+            {
+                tmp2 = Persons[i].SSN;
+                Persons[i].SSN = Persons[i - 1].SSN;
+                Persons[i - 1].SSN = tmp2;
+                
+                tmp3 = Persons[i].pname;
+                Persons[i].pname = Persons[i - 1].pname;
+                Persons[i - 1].pname = tmp3;
+            }
+        }
+    }
+    //end bubble sort
+    people.close();
+
+     for (int i = 0; i < pcount; i++)
+     {
+        cout << Persons[i].pname << " | "
+        << Persons[i].SSN << " | " << endl<<endl;
+     }
+
     
 }
 
