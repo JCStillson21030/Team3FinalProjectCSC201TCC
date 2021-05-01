@@ -8,7 +8,7 @@ using namespace std;
 struct person{  // define the UDT 
     
     string pname;
-    long pSSN; 
+    long SSN; 
 
     char gender; 
     string DOB;
@@ -88,8 +88,8 @@ void displayPersons(){
 
      for (int i = 0; i < pcount; i++)
      {
-        cout << Persons[i].pname << " | "
-        << Persons[i].SSN << " | " << endl<<endl;
+        cout << Persons[i].pname << " | " << Persons[i].SSN << " | " << Persons[i].gender << " | " << Persons[i].DOB <<
+        " | " << Persons[i].height << " | " << Persons[i].weight << " | " << Persons[i].fSSN << " | " << Persons[i].mSSN << " | " << endl << endl;
      }
 
     
