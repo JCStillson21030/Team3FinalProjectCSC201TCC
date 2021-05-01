@@ -192,7 +192,7 @@ person* head = new person; // independent person
     // display 
     while (current != NULL){
         cout << current->pname << " | " << current->SSN << " | " << current->gender << " | " << current->DOB << " | " 
-        << current->height << " | " << current->weight << " | " << current->fName << " | "  << current->mName << " | " <<  endl ;
+        << current->height << " | " << current->weight << " | " << current->fSSN << " | "  << current->mSSN << " | " <<  endl ;
         current = current->next; 
     }
 
