@@ -16,8 +16,8 @@ struct person{  // define the UDT
     float height; 
     float weight;
     
-    long fSSN;
     long mSSN;
+    long fSSN;
     
     person* next;
 //-------------------------------------    
@@ -56,9 +56,9 @@ void displayPersons(){
     getline( people, fLine);
     Persons [pcount].weight = stof(fLine);
     getline( people, fLine);
-    Persons[pcount].fSSN = stol(fLine);
-    getline( people, fLine);
     Persons[pcount].mSSN = stol(fLine);
+    getline( people, fLine);
+    Persons[pcount].fSSN = stol(fLine);
 
      pcount++;
     }
