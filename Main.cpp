@@ -166,9 +166,9 @@ person* head = new person; // independent person
         getline( fMovStar, fLine); 
         current->weight = stof(fLine);
         getline( fMovStar, fLine); 
-        current->fSSN = fLine;
+        current->fSSN = .stol(fLine);
         getline( fMovStar, fLine); 
-        current->mSSN = fLine;
+        current->mSSN = stol(fLine);
         
         newPerson = new person; // independent person 
         current->next = newPerson; // linking persons 
@@ -192,7 +192,7 @@ person* head = new person; // independent person
     // display 
     while (current != NULL){
         cout << current->pname << " | " << current->SSN << " | " << current->gender << " | " << current->DOB << " | " 
-        << current->height << " | " << current->weight << " | " << current->fSSN << " | "  << current->mSSN << " | " <<  endl ;
+        << current->height << " | " << current->weight << " | " << current->fSSN << " | "  << current->mSSN << " | " <<  endl << endl;
         current = current->next; 
     }
 
