@@ -166,7 +166,7 @@ person* head = new person; // independent person
         getline( fMovStar, fLine); 
         current->weight = stof(fLine);
         getline( fMovStar, fLine); 
-        current->fSSN = .stol(fLine);
+        current->fSSN = stol(fLine);
         getline( fMovStar, fLine); 
         current->mSSN = stol(fLine);
         
