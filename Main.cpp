@@ -24,44 +24,19 @@ struct person{  // define the UDT
 };
 
 
-void displayPersons(){
+void displayPersons(person* head){
     
-    person* head = new person; // independent person 
-    head->next = NULL; 
+    //person* head = new person; // independent person 
+    //head->next = NULL; 
     
-    person* current = head; person* newPerson ;  
+    //person* current = head; person* newPerson ;  
     // assign data values 
+    
     string fLine;
     ifstream people;
-    people.open("people.txt"); 
     
-    while (!people.eof()){
-        
-        getline( people, fLine); 
-        current->pname = fLine;
-        getline( people, fLine); 
-        current->SSN = stol(fLine);
-        getline( people, fLine); 
-        current->gender = fLine[0];
-        getline( people, fLine); 
-        current->DOB = fLine;
-        getline( people, fLine); 
-        current->height = stof(fLine);
-        getline( people, fLine); 
-        current->weight = stof(fLine);
-        getline( people, fLine); 
-        current->mSSN = stol(fLine);
-        getline( people, fLine); 
-        current->fSSN = stol(fLine);
-        
-        newPerson = new person; // independent person 
-        current->next = newPerson; // linking persons 
-        current = newPerson; 
-        
-    }
     
-    people.close(); 
-    
+
     current = head; person* prevPerson ;  
     while (current->next != NULL){  // (current != null) vs. (current->next != NULL)
         prevPerson = current;
