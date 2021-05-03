@@ -115,7 +115,7 @@ void displayPersons(){
                 index->mSSN = temp7;
                 
                 temp8 = current->fSSN;
-                current->mSSN = index->fSSN;
+                current->fSSN = index->fSSN;
                 index->fSSN = temp8;
                 
             }  
