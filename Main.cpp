@@ -189,7 +189,7 @@ person* head = new person; // independent person
     // assign data values 
     string fLine;
     ifstream fMovStar;
-    fMovStar.open("listofpeople.txt"); 
+    fMovStar.open("people.txt"); 
     
     while (!fMovStar.eof()){
         
