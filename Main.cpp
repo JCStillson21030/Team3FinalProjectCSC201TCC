@@ -26,71 +26,111 @@ struct person{  // define the UDT
 
 void displayPersons(){
     
-    int pcount = 0; string fLine; int linecount;
-
+    person* head = new person; // independent person 
+    head->next = NULL; 
+    
+    person* current = head; person* newPerson ;  
+    // assign data values 
+    string fLine;
     ifstream people;
-    people.open("people.txt");
+    people.open("people.txt"); 
     
-    while(!people.eof())    
-    {
-        getline(people, fLine);
-        linecount++;
+    while (!people.eof()){
+        
+        getline( people, fLine); 
+        current->pname = fLine;
+        getline( people, fLine); 
+        current->SSN = stol(fLine);
+        getline( people, fLine); 
+        current->gender = fLine[0];
+        getline( people, fLine); 
+        current->DOB = fLine;
+        getline( people, fLine); 
+        current->height = stof(fLine);
+        getline( people, fLine); 
+        current->weight = stof(fLine);
+        getline( people, fLine); 
+        current->mSSN = stol(fLine);
+        getline( people, fLine); 
+        current->fSSN = stol(fLine);
+        
+        newPerson = new person; // independent person 
+        current->next = newPerson; // linking persons 
+        current = newPerson; 
+        
     }
     
-    people.close();
-    person Persons[linecount]; 
-    people.open("people.txt");
-
-    while(!people.eof()){
-
-    getline( people, fLine);
-    Persons[pcount].pname = fLine;
-    getline( people, fLine);
-    Persons[pcount].SSN = stol(fLine);
-    getline( people, fLine);
-    Persons[pcount].gender = fLine[0];
-    getline( people, fLine);
-    Persons[pcount].DOB = fLine;
-    getline( people, fLine);
-    Persons[pcount].height = stof(fLine);
-    getline( people, fLine);
-    Persons [pcount].weight = stof(fLine);
-    getline( people, fLine);
-    Persons[pcount].mSSN = stol(fLine);
-    getline( people, fLine);
-    Persons[pcount].fSSN = stol(fLine);
-
-     pcount++;
-    }
-
-    float tmp2;
-    string tmp3;
-    ofstream myOpFile;
-    //bubble sort
-    for(int j = 0; j < pcount; j++)
-    {
-        for (int i = 1; i < pcount; i++)
-        {
-            if (Persons[i].SSN < Persons[i - 1].SSN)
-            {
-                tmp2 = Persons[i].SSN;
-                Persons[i].SSN = Persons[i - 1].SSN;
-                Persons[i - 1].SSN = tmp2;
+    people.close(); 
+    
+    current = head; person* prevPerson ;  
+    while (current->next != NULL){  // (current != null) vs. (current->next != NULL)
+        prevPerson = current;
+        current = current->next;
+    } 
+    
+    prevPerson->next = NULL; 
+    delete newPerson; 
+    
+    current = head;
+    
+    person* index = NULL; int temp; string temp2; char temp3; string temp4; float temp5; float temp6; long temp7; long temp8;
+    
+     
+    while(current != NULL)
+    {  
+        
+        index = current->next;  
+          
+        while(index != NULL)
+        {  
+            
+            if(current->SSN > index->SSN)
+            {  
+                temp = current->SSN;  
+                current->SSN = index->SSN;  
+                index->SSN = temp; 
                 
-                tmp3 = Persons[i].pname;
-                Persons[i].pname = Persons[i - 1].pname;
-                Persons[i - 1].pname = tmp3;
-            }
-        }
-    }
-    //end bubble sort
-    people.close();
+                temp2 = current->pname;
+                current->pname = index->pname;
+                index->pname = temp2;
+                
+                temp3 = current->gender;
+                current->gender = index->gender;
+                index->gender = temp3;
+                
+                temp4 = current->DOB;
+                current->DOB = index->DOB;
+                index->DOB = temp4;
+                
+                temp5 = current->height;
+                current->height = index->height;
+                index->height = temp5;
+                
+                temp6 = current->weight;
+                current->weight = index->weight;
+                index->weight = temp6;
+                
+                temp7 = current->mSSN;
+                current->mSSN = index->mSSN;
+                index->mSSN = temp7;
+                
+                temp8 = current->fSSN;
+                current->mSSN = index->fSSN;
+                index->fSSN = temp8;
+                
+            }  
+            index = index->next;  
+        }  
+        current = current->next;
+    }      
 
-     for (int i = 0; i < pcount; i++)
-     {
-        cout << Persons[i].pname << " | " << Persons[i].SSN << " | " << Persons[i].gender << " | " << Persons[i].DOB <<
-        " | " << Persons[i].height << " | " << Persons[i].weight << " | " << Persons[i].fSSN << " | " << Persons[i].mSSN << " | " << endl << endl;
-     }
+    current = head; 
+    
+     while (current != NULL){
+        cout << current->pname << " | " << current->SSN << " | " << current->gender << " | " << current->DOB << " | " 
+        << current->height << " | " << current->weight << " | " << current->fSSN << " | "  << current->mSSN << " | " <<  endl ;
+        current = current->next; 
+    }
 
     
 }
