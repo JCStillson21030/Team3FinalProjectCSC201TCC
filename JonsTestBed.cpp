@@ -24,7 +24,7 @@ struct person{  // define the UDT
     
     person* next;  
 };
-
+//the parenthese up here include the entire pointer that is being 'borrowed' from the main()
 void displayPersons(person *head, person *current, person *previous){
 
     cout << "Function 1: Display Persons in Ascending SSN Order." << endl;
@@ -114,47 +114,56 @@ void removePerson(person *head, person *current, person *previous){
 };
 void addPerson(person *head, person *current, person *previous, person *newPerson){
     cout << "Function 3: Add Person." << endl;
+    //CURRENTLY DOES NOT WORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /*
+    person* index = NULL; 
+    int temp; 
+    string temp2; 
+    char temp3; 
+    string temp4; 
+    float temp5; 
+    float temp6; 
+    long temp7; 
+    long temp8;
     
-    person* index = NULL; int temp; string temp2; char temp3; string temp4; float temp5; float temp6; long temp7; long temp8;
-    string usrInp;
-    cin.ignore();
-    int count = 0;
-    //Person* current = newPerson;
-    cout << "Enter Name to Add (Format: First Last): ";
-    getline(cin, usrInp);
-    current->pname = usrInp; 
-    cout << "Enter SSN of Person (Format: XXXXXXXXX): ";
-    getline(cin, usrInp);
-    current->SSN = stol(usrInp);
-    cout << "Enter Gender of Person (Format: M/F Case Sensitive): ";
-    getline(cin, usrInp);
-    current->gender = usrInp[0];
-    cout << "Enter Date of Birth of Person (Format: yyyy/mm/dd): ";
-    getline(cin, usrInp);
-    current->DOB = usrInp;
-    cout << "Enter Height of Person (Format: XX.XX): ";
-    getline(cin, usrInp);
-    current->height = stof(usrInp);
-    cout << "Enter Weight of Person (Format: XXX.XX): ";
-    getline(cin, usrInp);
-    current->weight = stof(usrInp);
-    cout << "Enter the Mother SSN of Person (Format: XXXXXXXXX): ";
-    getline(cin, usrInp);
-    current->mSSN = stol(usrInp);
-    cout << "Enter the Father SSN of Person (Format: XXXXXXXXX): ";
-    getline(cin, usrInp);
-    current->fSSN = stol(usrInp);
-     /*   
-    current->pname = temp2;
-    current->SSN = temp;
-    current->gender = temp3;
-    current->DOB = temp4;
-    current->height = temp5;
-    current->weight = temp6;
-    current->mSSN = temp7;
-    current->fSSN = temp8;
-    */
-     while(current != NULL)      
+    cout << endl << "Enter Name to Add (Format: FirstLast): ";
+    cin >> temp2;
+    //getline(cin, temp2);
+    cout << endl << "Enter SSN of Person (Format: XXXXXXXXX): ";
+    cin >> temp; 
+    //getline(cin, temp);
+    cout << endl << "Enter Gender of Person (Format: M/F Case Sensitive): ";
+    cin >> temp3;
+    //getline(cin, temp3);
+    cout << endl << "Enter Date of Birth of Person (Format: yyyy/mm/dd): ";
+    cin >> temp4;
+    //getline(cin, temp4);
+    cout << endl << "Enter Height of Person (Format: XX.XX): ";
+    cin >> temp5;
+    //getline(cin, temp5);
+    cout << endl << "Enter Weight of Person (Format: XXX.XX): ";
+    cin >> temp6;
+    //getline(cin, temp6);
+    cout << endl << "Enter the Mother SSN of Person (Format: XXXXXXXXX): ";
+    cin >> temp7;
+    //getline(cin, temp7);
+    cout << endl << "Enter the Father SSN of Person (Format: XXXXXXXXX): ";
+    cin >> temp8;
+    //getline(cin, temp8);
+    
+    //creating new person out of variables above
+    newPerson->pname = temp2;
+    newPerson->SSN = temp;
+    newPerson->gender = temp3;
+    newPerson->DOB = temp4;
+    newPerson->height = temp5;
+    newPerson->weight = temp6;
+    newPerson->mSSN = temp7;
+    newPerson->fSSN = temp8;
+    newPerson->next = NULL;
+    
+    //sort and print
+while(current != NULL)      // Why does this work when current is not declared/undefined? 
     {  
         index = current->next;  
 
@@ -197,12 +206,19 @@ void addPerson(person *head, person *current, person *previous, person *newPerso
             index = index->next;  
         }  
         current = current->next;
-    }  
-    
-    displayPersons(head, current, previous);    
-    
-    return;
+    }      
 
+    current = head; 
+    
+     while (current != NULL){
+        cout << current->pname << " | " << current->SSN << " | " << current->gender << " | " << current->DOB << " | " 
+        << current->height << " | " << current->weight << " | " << current->fSSN << " | "  << current->mSSN << " | " <<  endl ;
+        current = current->next; 
+    }
+
+
+    return;
+*/
 }
 void addBulk(){
     cout << "Function 4: Add Bulk." << endl;
@@ -231,20 +247,26 @@ void findSiblings(){
 void findRelatives(){
     cout << "Function 12: Find all Uncles, Aunts, Nephews and Nieces of a Person (User Input SSN)." << endl;
 }
-
+//add function for menu
+//add function for linked list creation with getlines
+//add function for 'switchboard'
+//
 main(){
-
+//the creation of the head for our linked list needs to occur in the main 
+//the nodes are created in modules
 person* head = new person; // independent person 
     head->next = NULL; 
     
     person* current = head; person* newPerson ;  
     // assign data values 
+
+    //readfile and getlines should be its own function
     string fLine;
     ifstream fMovStar;
     fMovStar.open("people.txt"); 
     
     while (!fMovStar.eof()){
-        
+        //be sure to copy this this and change fMovStar to cin, for other modules
         getline( fMovStar, fLine); 
         current->pname = fLine;
         getline( fMovStar, fLine); 
@@ -269,7 +291,7 @@ person* head = new person; // independent person
     }
     
     fMovStar.close(); 
-    
+    //this will be within modules 
     current = head; person* previous ;  
     while (current->next != NULL){  // (current != null) vs. (current->next != NULL)
         previous = current;
@@ -281,7 +303,7 @@ person* head = new person; // independent person
     
     current = head; 
     
-    // display 
+    //this not necessesary for the project turn in, all this will be in modules, however it is a took to make sure our main is working
     while (current != NULL){
         cout << current->pname << " | " << current->SSN << " | " << current->gender << " | " << current->DOB << " | " 
         << current->height << " | " << current->weight << " | " << current->mSSN << " | "  << current->fSSN << " | " <<  endl ;
@@ -290,8 +312,9 @@ person* head = new person; // independent person
 
     current = head; 
     cout << endl; 
-lup:
+lup: //crude loop will be replaced
 
+//the entire menu will be it's own function
 cout << "Choose a function." << endl << endl;
 
 //--------------Options------------ 
@@ -308,13 +331,14 @@ cout << " 10) Find children of a person. " << endl;
 cout << " 11) Find siblings of a person. " << endl;
 cout << " 12) Find uncles, aunts, cousins, nephews, and nieces of a person. " << endl;
 //---------------------------------
+//function 'choice =='s' will be updated with the switch function
 int choice;
 cin >> choice;
 
 //-------Function List----------
 
 if (choice == 1){
-    displayPersons(head, current, previous);
+    displayPersons(head, current, previous); //these parentheses are populated with the variables that are called upon, this will change as we update main()
 }
 else if (choice == 2){
     removePerson(head, current, previous);
