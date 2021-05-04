@@ -207,9 +207,46 @@ void addPerson(person *head, person *current, person *previous, person *newPerso
 void addBulk(){
     cout << "Function 4: Add Bulk." << endl;
 }
-void editPerson(){
+
+void editPerson(person* head, person *current, person *previous){
     cout << "Function 5: Edit Person." << endl;
+
+    long SSNinput;
+    string useredit;
+    string edittemp;
+    cin.ignore();
+    
+    string edittemp1, edittemp2;
+    
+    cout << "Enter the SSN of the desired person to be edited: ";
+    cin >> SSNinput;
+    
+    while(current != NULL)
+    {
+        if(current->SSN == SSNinput)
+        {
+            cout << "Enter first name of person: ";
+            cin >> edittemp1;
+            cout << "Enter last name of person: ";
+            cin >> edittemp2;
+            edittemp = edittemp1 + " " + edittemp2;
+            current->pname = edittemp;
+            
+            cout << "Enter new height for person: ";
+            cin >> edittemp;
+            current->height = stof(edittemp);
+            
+            cout << "Enter new weight for person: ";
+            cin >> edittemp;
+            current->weight = stof(edittemp);
+        }
+        current = current->next;
+    }
+    
+    displayPersons(head, current, previous); 
+    
 }
+
 void socialSecurity(person *head, person *current){
     cout << "Function 6: Display All Persons Eligible for Social Security (Over 65)." << endl << endl;
 
@@ -387,7 +424,7 @@ else if (choice == 4){
     addBulk();
 }
 else if (choice == 5){
-    editPerson();
+    editPerson(head, current, previous);
 }
 else if (choice == 6){
     socialSecurity(head, current);
