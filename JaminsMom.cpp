@@ -115,24 +115,27 @@ void removePerson(person *head, person *current, person *previous){
 void addPerson(person *head, person *current, person *previous, person *newPerson){
     cout << "Function 3: Add Person." << endl;
     
-    person* index = NULL; int temp; string temp2; char temp3; string temp4; float temp5; float temp6; long temp7; long temp8;
+person* index = NULL; int tmp; string tmpp2, tmppp2; char tmp3; string tmp4; float tmp5; float tmp6; long tmp7; long tmp8;
     
     cout << "Enter Name to Add (Format: First Last): ";
-    cin >> temp2;
+    cin >> tmpp2;
+    cin >> tmppp2;
+    string tmp2 = tmpp2 + " " + tmppp2;
+    cout << tmp2;
     cout << "Enter SSN of Person (Format: XXXXXXXXX): ";
-    cin >> temp;
+    cin >> tmp;
     cout << "Enter Gender of Person (Format: M/F Case Sensitive): ";
-    cin >> temp3;
+    cin >> tmp3;
     cout << "Enter Date of Birth of Person (Format: yyyy/mm/dd): ";
-    cin >> temp4;
+    cin >> tmp4;
     cout << "Enter Height of Person (Format: XX.XX): ";
-    cin >> temp5;
+    cin >> tmp5;
     cout << "Enter Weight of Person (Format: XXX.XX): ";
-    cin >> temp6;
+    cin >> tmp6;
     cout << "Enter the Mother SSN of Person (Format: XXXXXXXXX): ";
-    cin >> temp7;
+    cin >> tmp7;
     cout << "Enter the Father SSN of Person (Format: XXXXXXXXX): ";
-    cin >> temp8;
+    cin >> tmp8;
      /*   
     current->pname = temp2;
     current->SSN = temp;
@@ -151,44 +154,43 @@ void addPerson(person *head, person *current, person *previous, person *newPerso
         {  
             if(current->SSN > index->SSN)
             {  
-                temp = current->SSN;  
+                tmp = current->SSN;  
                 current->SSN = index->SSN;  
-                index->SSN = temp; 
+                index->SSN = tmp; 
                 
-                temp2 = current->pname;
+                tmp2 = current->pname;
                 current->pname = index->pname;
-                index->pname = temp2;
+                index->pname = tmp2;
                 
-                temp3 = current->gender;
+                tmp3 = current->gender;
                 current->gender = index->gender;
-                index->gender = temp3;
+                index->gender = tmp3;
                 
-                temp4 = current->DOB;
+                tmp4 = current->DOB;
                 current->DOB = index->DOB;
-                index->DOB = temp4;
+                index->DOB = tmp4;
                 
-                temp5 = current->height;
+                tmp5 = current->height;
                 current->height = index->height;
-                index->height = temp5;
+                index->height = tmp5;
                 
-                temp6 = current->weight;
+                tmp6 = current->weight;
                 current->weight = index->weight;
-                index->weight = temp6;
+                index->weight = tmp6;
                 
-                temp7 = current->mSSN;
+                tmp7 = current->mSSN;
                 current->mSSN = index->mSSN;
-                index->mSSN = temp7;
+                index->mSSN = tmp7;
                 
-                temp8 = current->fSSN;
+                tmp8 = current->fSSN;
                 current->fSSN = index->fSSN;
-                index->fSSN = temp8;
+                index->fSSN = tmp8;
             }  
             index = index->next;  
         }  
         current = current->next;
     }        
-        
-    
+              
     return;
 
 }
