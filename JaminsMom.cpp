@@ -116,23 +116,34 @@ void addPerson(person *head, person *current, person *previous, person *newPerso
     cout << "Function 3: Add Person." << endl;
     
     person* index = NULL; int temp; string temp2; char temp3; string temp4; float temp5; float temp6; long temp7; long temp8;
-    
+    string usrInp;
+    cin.ignore();
+    int count = 0;
+    //Person* current = newPerson;
     cout << "Enter Name to Add (Format: First Last): ";
-    cin >> temp2;
+    getline(cin, usrInp);
+    current->pname = usrInp; 
     cout << "Enter SSN of Person (Format: XXXXXXXXX): ";
-    cin >> temp;
+    getline(cin, usrInp);
+    current->SSN = stol(usrInp);
     cout << "Enter Gender of Person (Format: M/F Case Sensitive): ";
-    cin >> temp3;
+    getline(cin, usrInp);
+    current->gender = usrInp[0];
     cout << "Enter Date of Birth of Person (Format: yyyy/mm/dd): ";
-    cin >> temp4;
+    getline(cin, usrInp);
+    current->DOB = usrInp;
     cout << "Enter Height of Person (Format: XX.XX): ";
-    cin >> temp5;
+    getline(cin, usrInp);
+    current->height = stof(usrInp);
     cout << "Enter Weight of Person (Format: XXX.XX): ";
-    cin >> temp6;
+    getline(cin, usrInp);
+    current->weight = stof(usrInp);
     cout << "Enter the Mother SSN of Person (Format: XXXXXXXXX): ";
-    cin >> temp7;
+    getline(cin, usrInp);
+    current->mSSN = stol(usrInp);
     cout << "Enter the Father SSN of Person (Format: XXXXXXXXX): ";
-    cin >> temp8;
+    getline(cin, usrInp);
+    current->fSSN = stol(usrInp);
      /*   
     current->pname = temp2;
     current->SSN = temp;
@@ -186,8 +197,9 @@ void addPerson(person *head, person *current, person *previous, person *newPerso
             index = index->next;  
         }  
         current = current->next;
-    }        
-        
+    }  
+    
+    displayPersons(head, current, previous);    
     
     return;
 
