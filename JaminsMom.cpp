@@ -470,8 +470,9 @@ else if (choice == 11){
 else if (choice == 12){
     findRelatives();
 }
-
-    
+else if (choice == 13){
+    exitProg();
+}    
     char continuation;
     cout << "Would you like to continue? Y/N (Case Sensitive): ";
     cin >> continuation;
