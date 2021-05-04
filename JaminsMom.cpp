@@ -210,8 +210,69 @@ void addBulk(){
 void editPerson(){
     cout << "Function 5: Edit Person." << endl;
 }
-void socialSecurity(){
-    cout << "Function 6: Display All Persons Eligible for Social Security (Over 65)." << endl;
+void socialSecurity(person *head, person *current){
+    cout << "Function 6: Display All Persons Eligible for Social Security (Over 65)." << endl << endl;
+
+   
+
+    cout<< "The People Eligible for Social Security are :" << endl << endl;
+    person* index = NULL; int temp; string temp2; char temp3; string temp4; float temp5; float temp6; long temp7; long temp8;
+    while(current != NULL)      // Why does this work when current is not declared/undefined? 
+    {  
+        index = current->next;  
+
+        while(index != NULL)
+        {  
+            if(current->DOB > index->DOB)
+            {  
+                temp = current->SSN;  
+                current->SSN = index->SSN;  
+                index->SSN = temp; 
+                
+                temp2 = current->pname;
+                current->pname = index->pname;
+                index->pname = temp2;
+                
+                temp3 = current->gender;
+                current->gender = index->gender;
+                index->gender = temp3;
+                
+                temp4 = current->DOB;
+                current->DOB = index->DOB;
+                index->DOB = temp4;
+                
+                temp5 = current->height;
+                current->height = index->height;
+                index->height = temp5;
+                
+                temp6 = current->weight;
+                current->weight = index->weight;
+                index->weight = temp6;
+                
+                temp7 = current->mSSN;
+                current->mSSN = index->mSSN;
+                index->mSSN = temp7;
+                
+                temp8 = current->fSSN;
+                current->fSSN = index->fSSN;
+                index->fSSN = temp8;
+            }  
+            index = index->next;  
+        }  
+        current = current->next;
+    }      
+
+    current = head; 
+    
+    while(current->next != NULL)
+    {
+        if( 2021 - stoi(current->DOB.substr(0,4)) >= 65 )
+        {
+            cout << current->pname << ": Age: " << 2021 - stoi(current->DOB.substr(0,4)) << endl;
+        }
+        
+        current = current->next;
+    }
 }
 void cardioDisease(){
     cout << "Function 7: Display All Persons at High Risk of Cardiovascular Disease (BMI 27 and higher)." << endl;
@@ -329,7 +390,7 @@ else if (choice == 5){
     editPerson();
 }
 else if (choice == 6){
-    socialSecurity();
+    socialSecurity(head, current);
 }
 else if (choice == 7){
     cardioDisease();
