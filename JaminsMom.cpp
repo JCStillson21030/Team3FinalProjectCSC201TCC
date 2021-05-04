@@ -427,7 +427,6 @@ cout << "  9)  Find parents of a person. " << endl;
 cout << " 10) Find children of a person. " << endl;
 cout << " 11) Find siblings of a person. " << endl;
 cout << " 12) Find uncles, aunts, cousins, nephews, and nieces of a person. " << endl;
-cout << " 13) Exit " << endl;
 //---------------------------------
 int choice;
 cin >> choice;
@@ -470,9 +469,7 @@ else if (choice == 11){
 else if (choice == 12){
     findRelatives();
 }
-else if (choice == 13){
-    exitProg();
-}    
+
     char continuation;
     cout << "Would you like to continue? Y/N (Case Sensitive): ";
     cin >> continuation;
