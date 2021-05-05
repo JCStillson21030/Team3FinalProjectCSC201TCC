@@ -311,8 +311,30 @@ void socialSecurity(person *head, person *current){
         current = current->next;
     }
 }
-void cardioDisease(){
+void cardioDisease(person* head, person *current, person *previous){
     cout << "Function 7: Display All Persons at High Risk of Cardiovascular Disease (BMI 27 and higher)." << endl;
+    
+    //BMI = WEIGHT IN KG / (HEIGHT IN M)-SQUARED
+    // WIGHT IN KG = WEIGHT IN POUNDS * 0.45 ; HEIGHT IN METERS = HEIGHT IN INCHES * 0.0254
+    //Formula: 703 x weight (lbs) / [height (in)]^2
+
+
+    while(current != NULL)      
+    {  
+            //cout<<"The BMI of " << current->pname << " is " << ((current->weight) * 0.45) / (((current->height) * 0.0254)) * ((current->height) * 0.0254)<<endl;
+            float BMI = ((current->weight) * 0.45) / (((current->height) * 0.0254)) * ((current->height) * 0.0254);
+            
+            if(BMI >= 27)
+            {
+                cout << "The BMI of " << current->pname << " is " << BMI << endl;
+            }
+            
+            current = current->next;
+            
+    }
+    current = head;
+    
+    
 }
 void genderRatio(person *head, person *current, person *previous){
     cout << "Function 8: Display the Male to Female Ratio in the County (females per thousand males)." << endl;
@@ -817,7 +839,7 @@ else if (choice == 6){
     socialSecurity(head, current);
 }
 else if (choice == 7){
-    cardioDisease();
+    cardioDisease(head, current, previous);
 }
 else if (choice == 8){
     genderRatio(head, current, previous);
