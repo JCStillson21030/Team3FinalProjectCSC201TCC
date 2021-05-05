@@ -391,8 +391,70 @@ void findParents(person *head, person *current, person *previous){
     cout << endl;
     
 }
-void findChildren(){
+void findChildren(person *head, person *current, person *previous){
     cout << "Function 10: Find all the Children of a Person (User Input SSN)." << endl;
+    
+      string kidname1;
+      string kidname2;
+      string parentname;
+    long personSSN;
+    long momSSN;
+    long dadSSN;
+    
+    cout << "Please enter the SSN of the person you want to find the children of: "; cin >> personSSN;
+    
+    while(current != NULL)
+    {
+        if(current->SSN == personSSN)
+        {
+            parentname = current->pname;
+        }
+        // 195483298*/
+        current = current->next;
+    }
+    current = head;
+    
+    
+    while(current != NULL)
+    {
+        if((current->fSSN == personSSN) || (current->mSSN == personSSN)) 
+        {
+            kidname1 = current->pname;
+            dadSSN = current->fSSN;
+            momSSN = current->mSSN; 
+        }
+        // 195483298*/
+        current = current->next;
+    }
+    
+     while(current != NULL)
+    {
+        if((current->fSSN == personSSN) || (current->mSSN == personSSN)) 
+        {
+            kidname2 = current->pname;
+            momSSN = current->mSSN; 
+        }
+    else continue;
+    
+    current = head;
+    
+   
+    current = current->next;
+    }
+    current = head;
+    
+    while(current != NULL)
+    {
+        if((current->mSSN == momSSN) || (current->fSSN == dadSSN))
+        {
+            //cout << personname << " has the mother: " << current->pname << endl;
+            cout << parentname << " has the child " << kidname1 << kidname2 << endl;
+        }
+        current = current->next;
+    }
+    current = head;
+    
+    cout << endl;   
 }
 void findSiblings(){
     cout << "Function 11: Find all Siblings of a Person (User Input SSN)." << endl;
@@ -510,7 +572,7 @@ else if (choice == 9){
     findParents(head, current, previous);
 }
 else if (choice == 10){
-    findChildren();
+    findChildren(head, current, previous);
 }
 else if (choice == 11){
     findSiblings();
