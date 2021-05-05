@@ -377,7 +377,6 @@ void print_PersonNodes(Person* head) {
     cout << "Here is the linked list of persons: " << endl << endl;
 
     while (current != NULL) {
-        
         cout << current -> personName << " | "
              << current -> personSSN << " | "
              << current -> personGender << " | "

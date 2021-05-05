@@ -20,14 +20,61 @@ struct Person{
     
     Person* next;                                         
 };
+
+void show_welcomeMsg();
+
+void show_goodbyeMsg();
+
+int user_input();                                   // Utility -- user input
+
+bool menuFunction(bool, Person*);                      // Main menu
+
+Person* populateList(string);                    // Initial dataset
+
+struct Person* swapPerson(struct Person*,          // Utility -- swap nodes
+                           struct Person*);
+
+int nodeCount(Person*);                         // Utility
+
+void printPersons(Person*);                    // Utility
+
+Person* sortSSN(struct Person**);                // Option 1
+
+Person* deletePerson(Person**);                    // Option 2
+
+Person* newPerson(Person**);                  // Option 3
+
+Person* addSupplemental(Person**);                   // Option 4
+
+void editPerson(Person*);                      // Option 5
+
+void displaySSEligibility(Person*);                  // Option 6
+
+
+// End function prototypes
+
+
+
+
+
+
+
+
 void show_WelcomeMsg(){
 
 }
 void show_GoodbyeMSG(){
 
 }
+
 //read file and make list
-void populateList(string myPeople, Person* current, Person* newPerson, Person* head){
+Person* populateList(string myPeople){
+
+    Person* head = new Person;
+    head -> next = NULL;
+
+    Person* current = head;
+    Person* newPerson;
 
     ifstream myPersonFile;
     myPersonFile.open(myPeople);
@@ -80,13 +127,13 @@ void populateList(string myPeople, Person* current, Person* newPerson, Person* h
 //utility usage for counting persons
 int nodeCount(Person* head){
 
-    Person* tmp = head;
+    Person* temp = head;
 
     int nodeCount = 0;
 
-    while(tmp != NULL){
+    while(temp != NULL){
         nodeCount++;
-        tmp = tmp -> next;
+        temp = temp -> next;
     }
 
     return nodeCount;
@@ -324,31 +371,31 @@ void printPersons(Person* head){
 Person* deletePerson(Person** head){
 
     bool keyFound = false;
-
-    string usrInp;
+    
+    string currentLine;
 
     cin.ignore();
 
     cout << "Enter the SSN of the person you would like to delete: " << endl;
 
-    getline(cin, usrInp);
-    long key = stol(usrInp);
+    getline(cin, currentLine);
+    long key = stol(currentLine);
 
-    Person* tmp = *head;
+    Person* temp = *head;
     Person* prev = NULL;
 
-    if(tmp != NULL && tmp -> SSN == key){
-        *head = tmp -> next;
-        delete tmp;
+    if(temp != NULL && temp -> SSN == key){
+        *head = temp -> next;
+        delete temp;
     } else{
-        while(tmp != NULL && tmp -> SSN != key){
-            prev = tmp;
-            tmp = tmp -> next;
+        while(temp != NULL && temp -> SSN != key){
+            prev = temp;
+            temp = temp -> next;
             keyFound = true;
         }
     }
 
-    if (tmp == NULL){
+    if (temp == NULL){
         cout << "Entered SSN was not found." << endl;
         keyFound = false;
         cin.ignore();
@@ -356,22 +403,24 @@ Person* deletePerson(Person** head){
         return *head;
     }
 
-    prev -> next = tmp -> next;
-    delete tmp;
+    prev -> next = temp -> next;
+    delete temp;
 
     cout << "Deletion completed." << endl;
-    cout << "Person " << tmp -> SSN << " deleted." << endl;
+    cout << "Person " << temp -> SSN << " deleted." << endl;
 
     return *head;
 }
 
 //utility function for the menu selection process
-int usrInp(){
-    int usrInp = 0;
-
-    while(cin >> usrInp){
-        return usrInp;
-    }
+int user_input() {
+    
+    int inp = 0;
+    
+    while (cin >> inp) {
+        
+        return inp;
+    } 
 }
 
 //menu
@@ -405,7 +454,7 @@ cout << "Choose a function." << endl << endl;
 
         cout << "Enter numeric option or anything else to exit." << endl;
 
-        choice = usrInp();
+        choice = user_input();
 
         switch(choice){
              
@@ -421,6 +470,8 @@ cout << "Choose a function." << endl << endl;
             case 2: 
 
                 cout << "Function 2: Remove Person (User Input SSN)." << endl;
+
+                cin.clear();
 
                 printPersons(head);
                 head = deletePerson(&head);
@@ -442,7 +493,7 @@ cout << "Choose a function." << endl << endl;
                 cout << "Function 4: Add Persons from Supplemental File." << endl;
                 //in evanescencev2
                 
-                head = addSupplemental(head);
+                head = addSupplemental(&head);
                 sortSSN(&head);
                 printPersons(head);
 
@@ -551,8 +602,9 @@ cout << "Choose a function." << endl << endl;
     return dontQuit;
 }
 
-void addSupplemental(Person** head){
-    string fLine;
+Person* addSupplemental(Person** head){
+    
+    string suppLine;
           string fileName = "supplemental.txt";
     
     Person* current = *head; 
@@ -570,29 +622,29 @@ void addSupplemental(Person** head){
         current -> next = newPerson;    
         current = newPerson;
         
-        getline(dataFile, fLine);
-        current -> pname = fLine;
+        getline(dataFile, suppLine);
+        current -> pname = suppLine;
         
-        getline(dataFile, fLine);
-        current -> SSN = stol(fLine);
+        getline(dataFile, suppLine);
+        current -> SSN = stol(suppLine);
                 
-        getline(dataFile, fLine);
-        current -> gender = fLine[0]; 
+        getline(dataFile, suppLine);
+        current -> gender = suppLine[0]; 
         
-        getline(dataFile, fLine);
-        current -> DOB = fLine; 
+        getline(dataFile, suppLine);
+        current -> DOB = suppLine; 
     
-        getline(dataFile, fLine);
-        current -> height = stof(fLine);
+        getline(dataFile, suppLine);
+        current -> height = stof(suppLine);
 
-        getline(dataFile, fLine);
-        current -> weight = stof(fLine);
+        getline(dataFile, suppLine);
+        current -> weight = stof(suppLine);
     
-        getline(dataFile, fLine);
-        current -> mSSN = stol(fLine);
+        getline(dataFile, suppLine);
+        current -> mSSN = stol(suppLine);
 
-        getline(dataFile, fLine);
-        current -> fSSN = stol(fLine);
+        getline(dataFile, suppLine);
+        current -> fSSN = stol(suppLine);
     }
     
     dataFile.close();
@@ -621,13 +673,13 @@ int main(){
     Person* head = new Person; //independent person
     head -> next = NULL; //NULL equals the end of the list
 
-    Person* current = head;
-    Person* newPerson;
+    //Person* current = head;
+    //Person* newPerson;
     //End struct pointers/linked list
 
     //baseline functions that allow the program to work, getting us to the point of user interaction
     //create list using the struct 
-    populateList(myPeople, current, newPerson, head);
+    populateList(myPeople);
 
     //sort by SSN
     sortSSN(&head);
@@ -636,11 +688,11 @@ int main(){
     printPersons(head);
 
     //main menu loop
-    /*
+    //is this even necessary?
     while(quit == false && cin){
-        quit = menuLoop(quit, head, current);
+        quit = menuFunction(quit, head);
     }
-*/
+
     //goodbye
     show_GoodbyeMSG();
 
