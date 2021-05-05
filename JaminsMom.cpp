@@ -394,13 +394,10 @@ void findParents(person *head, person *current, person *previous){
 void findChildren(person *head, person *current, person *previous){
     cout << "Function 10: Find all the Children of a Person (User Input SSN)." << endl;
     
-      string kidname1;
-      string kidname2;
-      string parentname;
+    string kidname;
+    string parentname;
     long personSSN;
-    long momSSN;
-    long dadSSN;
-    
+ 
     cout << "Please enter the SSN of the person you want to find the children of: "; cin >> personSSN;
     
     while(current != NULL)
@@ -412,46 +409,22 @@ void findChildren(person *head, person *current, person *previous){
         // 195483298*/
         current = current->next;
     }
+    
     current = head;
     
-    
-    while(current != NULL)
+    while(current !=NULL)
     {
         if((current->fSSN == personSSN) || (current->mSSN == personSSN)) 
         {
-            kidname1 = current->pname;
-            dadSSN = current->fSSN;
-            momSSN = current->mSSN; 
+            kidname = current->pname;
+      
+            cout << endl;
+            cout << kidname << " is the kid/kids of: " << parentname;
         }
         // 195483298*/
         current = current->next;
     }
-    
-     while(current != NULL)
-    {
-        if((current->fSSN == personSSN) || (current->mSSN == personSSN)) 
-        {
-            kidname2 = current->pname;
-            momSSN = current->mSSN; 
-        }
-    else continue;
-    
-    current = head;
-    
-   
-    current = current->next;
-    }
-    current = head;
-    
-    while(current != NULL)
-    {
-        if((current->mSSN == momSSN) || (current->fSSN == dadSSN))
-        {
-            //cout << personname << " has the mother: " << current->pname << endl;
-            cout << parentname << " has the child " << kidname1 << kidname2 << endl;
-        }
-        current = current->next;
-    }
+
     current = head;
     
     cout << endl;   
