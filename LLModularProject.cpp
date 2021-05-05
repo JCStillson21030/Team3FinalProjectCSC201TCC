@@ -77,7 +77,6 @@ void populateList(string myPeople, Person* current, Person* newPerson, Person* h
 
 }
 
-
 //utility usage for counting persons
 int nodeCount(Person* head){
 
@@ -93,19 +92,18 @@ int nodeCount(Person* head){
     return nodeCount;
 }
 
-/*
 //utitily usage for swap and sort
-struct person* swapPerson(struct Person* nodeOne, struct Person* nodeTwo){
-    struct Person* tmp = nodeTwo -> next;
+
+struct Person* swapPerson(struct Person* nodeOne, struct Person* nodeTwo){
+    struct Person* temp = nodeTwo -> next;
     nodeTwo -> next = nodeOne;
-    nodeOne -> next = tmp;
+    nodeOne -> next = temp;
+
     return nodeTwo;
 }
-*/
-
 
 //Creat new person and add to list
-Person* newPerson(Person* current, Person** head){
+Person* newPerson(Person** head){
     string usrInp;
 
     cin.ignore();
@@ -118,7 +116,7 @@ Person* newPerson(Person* current, Person** head){
 
     cout << "Enter Name to Add (Format: First Last): ";
     getline(cin, usrInp);
-    usrInpPerson -> pName = usrInp;
+    usrInpPerson -> pname = usrInp;
     cout << "Enter SSN of Person (Format: XXXXXXXXX): ";
     getline(cin, usrInp);
     usrInpPerson -> SSN = stol(usrInp);
@@ -141,7 +139,7 @@ Person* newPerson(Person* current, Person** head){
     getline(cin, usrInp);
     usrInpPerson -> fSSN = stol(usrInp);
 
-    current = *head;
+    Person* current = *head;
 
     struct Person** headPointer;
 
@@ -208,7 +206,7 @@ void displaySSEligibility(Person* head){
     cout << "Eligible for Social Security: " << endl;
 
     while(current -> next != NULL){
-        if(2021 - stoi(current -> DOB.substr(0,4)) >= 65){
+        if(2021 - stoi(current -> DOB.substr(0,4)) >= 65){ //does the substr need to be 0, 3 ??
             cout << current -> pname << ": Age: " << 2021 - stoi(current -> DOB.substr(0,4)) << endl;
         }
         current = current -> next;
@@ -232,7 +230,7 @@ void editPerson(Person* head){
     editSSN = stol(usrInp);
 
     while(current -> next != NULL){
-        if(current -> SSN == usrInp){
+        if(current -> SSN == editSSN){
             cout << "SSN is: " << current -> pname << endl;
             cout << "Edit initialized. Enter 0 to keep orginial information" << endl;
 
@@ -299,9 +297,9 @@ void editPerson(Person* head){
 }
 
 //print person nodes
-void print_Persons(Person* head, Person* current){
+void printPersons(Person* head){
 
-    current = head;
+    Person* current = head;
 
     cout << endl;
 
@@ -367,6 +365,7 @@ Person* deletePerson(Person** head){
     return *head;
 }
 
+//utility function for the menu selection process
 int usrInp(){
     int usrInp = 0;
 
@@ -376,7 +375,7 @@ int usrInp(){
 }
 
 //menu
-bool menuFunction(bool quit, Person* head, Person* current){
+bool menuFunction(bool quit, Person* head){
 
 cout << "Choose a function." << endl << endl;
 
@@ -415,7 +414,7 @@ cout << "Choose a function." << endl << endl;
                 cout << "Function 1: Display Persons in Ascending SSN Order." << endl;
 
                 sortSSN(&head);
-                print_Persons(head, current);
+                printPersons(head);
 
                 break;
 
@@ -423,9 +422,9 @@ cout << "Choose a function." << endl << endl;
 
                 cout << "Function 2: Remove Person (User Input SSN)." << endl;
 
-                print_Persons(head, current);
+                printPersons(head);
                 head = deletePerson(&head);
-                print_Persons(head, current);
+                printPersons(head);
 
                 break;
 
@@ -433,16 +432,19 @@ cout << "Choose a function." << endl << endl;
 
                 cout << "Function 3: Add New Person." << endl;
 
-                newPerson(current, &head);
-                print_Persons(head, current);
+                newPerson(&head);
+                printPersons(head);
 
                 break;
 
             case 4: 
 
                 cout << "Function 4: Add Persons from Supplemental File." << endl;
-
+                //in evanescencev2
+                
                 head = addSupplemental(head);
+                sortSSN(&head);
+                printPersons(head);
 
                 break;
 
@@ -450,9 +452,9 @@ cout << "Choose a function." << endl << endl;
 
                 cout << "Function 5: Edit Person." << endl;
 
-                print_Persons(head, current);
+                printPersons(head);
                 editPerson(head);
-                print_Persons(head, current);
+                printPersons(head);
 
                 break;
 
@@ -477,7 +479,7 @@ cout << "Choose a function." << endl << endl;
                 cout << "Function 8: Display the Male to Female Ratio in the County (females per thousand males)." << endl;
 
                 //incomplete
-
+                //in jamins mom
                 break;
 
             case 9:
@@ -485,7 +487,7 @@ cout << "Choose a function." << endl << endl;
                 cout << "Function 9: Find the Parents of a Person (User Input SSN)." << endl;
 
                 //incomplete
-
+                //in jamins mom
                 break;
 
             case 10: 
@@ -549,6 +551,60 @@ cout << "Choose a function." << endl << endl;
     return dontQuit;
 }
 
+void addSupplemental(Person** head){
+    string fLine;
+          string fileName = "supplemental.txt";
+    
+    Person* current = *head; 
+
+    while (current -> next != NULL) {
+        current = current -> next;
+    } 
+    
+    ifstream dataFile;
+    dataFile.open(fileName);
+
+    while (!dataFile.eof()) { 
+        
+        Person* newPerson = new Person;
+        current -> next = newPerson;    
+        current = newPerson;
+        
+        getline(dataFile, fLine);
+        current -> pname = fLine;
+        
+        getline(dataFile, fLine);
+        current -> SSN = stol(fLine);
+                
+        getline(dataFile, fLine);
+        current -> gender = fLine[0]; 
+        
+        getline(dataFile, fLine);
+        current -> DOB = fLine; 
+    
+        getline(dataFile, fLine);
+        current -> height = stof(fLine);
+
+        getline(dataFile, fLine);
+        current -> weight = stof(fLine);
+    
+        getline(dataFile, fLine);
+        current -> mSSN = stol(fLine);
+
+        getline(dataFile, fLine);
+        current -> fSSN = stol(fLine);
+    }
+    
+    dataFile.close();
+    
+    current = *head;
+  
+    cout << "Bulk addition operation successful!" << endl;
+    
+    cout << "Updating database..." << endl;
+    
+    return *head;
+}
 
 int main(){
 
@@ -556,19 +612,20 @@ int main(){
     show_WelcomeMsg();
 
     //variable declarations
-    bool quit = false;
+    bool quit = false; //used in some functions (multiple)
     string myPeople = "people.txt"; 
 
     //end variable declarations
 
     //initialize struct pointers/linked list
     Person* head = new Person; //independent person
-    head -> next = NULL;
+    head -> next = NULL; //NULL equals the end of the list
 
     Person* current = head;
     Person* newPerson;
     //End struct pointers/linked list
 
+    //baseline functions that allow the program to work, getting us to the point of user interaction
     //create list using the struct 
     populateList(myPeople, current, newPerson, head);
 
@@ -576,13 +633,14 @@ int main(){
     sortSSN(&head);
 
     //initial print
-    printPersons(head, current);
+    printPersons(head);
 
     //main menu loop
+    /*
     while(quit == false && cin){
         quit = menuLoop(quit, head, current);
     }
-
+*/
     //goodbye
     show_GoodbyeMSG();
 
