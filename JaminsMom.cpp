@@ -391,9 +391,6 @@ void findParents(person *head, person *current, person *previous){
     cout << endl;
     
 }
-   
-    
-}
 void findChildren(){
     cout << "Function 10: Find all the Children of a Person (User Input SSN)." << endl;
 }
