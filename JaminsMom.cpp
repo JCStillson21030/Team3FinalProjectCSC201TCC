@@ -513,8 +513,161 @@ void findSiblings(person *head, person *current, person *previous){
     
     
 }
-void findRelatives(){
+void findRelatives(person *head, person *current, person *previous){
     cout << "Function 12: Find all Uncles, Aunts, Nephews and Nieces of a Person (User Input SSN)." << endl;
+    
+    //----------displays the geezers first----------
+    person* index = NULL; int temp; string temp2; char temp3; string temp4; float temp5; float temp6; long temp7; long temp8;
+    while(current != NULL)      // Why does this work when current is not declared/undefined? 
+    {  
+        index = current->next;  
+
+        while(index != NULL)
+        {  
+            if(current->DOB > index->DOB)
+            {  
+                temp = current->SSN;  
+                current->SSN = index->SSN;  
+                index->SSN = temp; 
+                
+                temp2 = current->pname;
+                current->pname = index->pname;
+                index->pname = temp2;
+                
+                temp3 = current->gender;
+                current->gender = index->gender;
+                index->gender = temp3;
+                
+                temp4 = current->DOB;
+                current->DOB = index->DOB;
+                index->DOB = temp4;
+                
+                temp5 = current->height;
+                current->height = index->height;
+                index->height = temp5;
+                
+                temp6 = current->weight;
+                current->weight = index->weight;
+                index->weight = temp6;
+                
+                temp7 = current->mSSN;
+                current->mSSN = index->mSSN;
+                index->mSSN = temp7;
+                
+                temp8 = current->fSSN;
+                current->fSSN = index->fSSN;
+                index->fSSN = temp8;
+            }  
+            index = index->next;  
+        }  
+        current = current->next;
+    }      
+
+    current = head; 
+    //----------displays the geezers first^^^----------
+    string personname;
+    long personSSN;
+    long momSSN;
+    long dadSSN;
+    
+    long momsmomSSN;
+    long momsdadSSN;
+    
+    long dadsmomSSN;
+    long dadsdadSSN;
+    
+    long siblingSSN;
+    
+    long auntuncleSSN;
+    
+    cout << "Please enter the SSN of the person you want to find the aunts, uncles, nephews, and nieces of: "; cin >> personSSN;
+    cout << endl;
+    
+    while(current != NULL)
+    {
+        if(current->SSN == personSSN)
+        {
+            personname = current->pname;
+            momSSN = current->mSSN;
+            dadSSN = current->fSSN;
+        }
+        // 195483298*/
+        current = current->next;
+    }
+    current = head;
+    
+    //----------mum----------
+    while(current != NULL)
+    {
+        if(current->SSN == momSSN)
+        {
+            momsmomSSN = current->mSSN;
+            momsdadSSN = current->fSSN;
+        }
+        current = current->next;
+    }
+    current = head;
+    
+    //----------dad----------
+    while(current != NULL)
+    {
+        if(current->SSN == dadSSN)
+        {
+            dadsmomSSN = current->mSSN;
+            dadsdadSSN = current->fSSN;
+        }
+        current = current->next;
+    }
+    current = head;
+    
+    //----------finds aunts and uncles----------
+    while(current != NULL)
+    {
+        if((((current->mSSN == dadsmomSSN) && (current->SSN != dadSSN)) || ((current->fSSN == dadsdadSSN) && (current->SSN != dadSSN))) || (((current->mSSN == momsmomSSN) && (current->SSN != momSSN)) || ((current->fSSN == momsdadSSN) && (current->SSN != momSSN))))
+        {
+            auntuncleSSN = current->SSN;
+            cout << personname << " has the aunts and uncles (in descending order of age): " << current->pname << " || Born: " << current->DOB << endl;
+        }
+        current = current->next;
+    }
+    current = head;
+    cout << endl;
+    
+    //----------finds persons siblings----------
+    while(current != NULL)
+    {
+        if((((current->mSSN == momSSN) && (current->SSN != personSSN)) || ((current->fSSN == dadSSN) && (current->SSN != personSSN))))
+        {
+        siblingSSN = current->SSN;
+        //cout << personname << " has the siblings: " << current->pname << endl;
+        }
+        current = current->next;
+    }
+    current = head;
+    
+    //----------finds nieces and nephews----------
+    while(current != NULL)
+    {
+        if((current->mSSN == siblingSSN) || (current->fSSN == siblingSSN))
+        {
+            cout << personname << " has the nieces and nephews (in descending order of age): " << current->pname << " || Born: " << current->DOB << endl;
+        }
+        current = current->next;
+    }
+    current = head;
+    cout << endl;
+    
+    //----------finds cousins----------
+    while(current != NULL)
+    {
+        if(         (current->mSSN == auntuncleSSN) || (current->fSSN == auntuncleSSN)        )
+        {
+            cout << personname << " has the cousins (in descending order of age): " << current->pname << " || Born: " << current->DOB << endl;
+        }
+        current = current->next;
+    }
+    current = head;
+    cout << endl;
 }
 
 main(){
@@ -632,7 +785,7 @@ else if (choice == 11){
     findSiblings(head, current, previous);
 }
 else if (choice == 12){
-    findRelatives();
+    findRelatives(head, current, previous);
 }
 
     char continuation;
