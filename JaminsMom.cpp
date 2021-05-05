@@ -349,6 +349,7 @@ void findParents(person *head, person *current, person *previous){
     
     cout << "Please enter the SSN of the person you want to find the parents of: "; cin >> personSSN;
     
+    
     while(current != NULL)
     {
         if(current->SSN == personSSN)
@@ -357,22 +358,39 @@ void findParents(person *head, person *current, person *previous){
             momSSN = current->mSSN;
             dadSSN = current->fSSN;
         }
-        
-        else if(current->SSN == momSSN)
+        // 195483298*/
+        current = current->next;
+    }
+    current = head;
+    
+    
+    //mum
+    while(current != NULL)
+    {
+        if(current->SSN == momSSN)
         {
             cout << personname << " has the mother: " << current->pname << endl;
             
         }
-        
-        else if(current->SSN == dadSSN)
+        current = current->next;
+    }
+    current = head;
+    
+    
+    //dad
+    while(current != NULL)
+    {
+        if(current->SSN == dadSSN)
         {
             cout << personname << " has the father: " << current->pname << endl;
             
         }
-        // 195483298 
         current = current->next;
     }
     
+    cout << endl;
+    
+}
    
     
 }
