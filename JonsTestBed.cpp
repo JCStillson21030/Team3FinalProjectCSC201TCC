@@ -21,11 +21,11 @@ struct Person{
     Person* next;                                         
 };
 
-void show_welcomeMsg();
+//void show_welcomeMsg();
 
-void show_goodbyeMsg();
+//void show_goodbyeMsg();
 
-int user_input();                                   // Utility -- user input
+//int user_input();                                   // Utility -- user input
 
 bool menuFunction(bool, Person*);                      // Main menu
 
@@ -68,7 +68,7 @@ void show_GoodbyeMSG(){
 }
 
 //read file and make list
-Person* populateList(string myPeople){
+Person* populateList(string* myPeople){
 
     Person* head = new Person;
     head -> next = NULL;
@@ -77,7 +77,7 @@ Person* populateList(string myPeople){
     Person* newPerson;
 
     ifstream myPersonFile;
-    myPersonFile.open(myPeople);
+    myPersonFile.open(*myPeople);
 
     string fLine;
 
@@ -121,6 +121,11 @@ Person* populateList(string myPeople){
     delete newPerson;
     
     current = head;
+
+    cout << head -> pname << endl;
+    cout << current -> pname << endl;
+
+    return head;
 
 }
 
@@ -413,7 +418,7 @@ Person* deletePerson(Person** head){
 }
 
 //utility function for the menu selection process
-int user_input() {
+/*int user_input() {
     
     int inp = 0;
     
@@ -421,7 +426,7 @@ int user_input() {
         
         return inp;
     } 
-}
+}*/
 
 //menu
 bool menuFunction(bool quit, Person* head){
@@ -453,8 +458,9 @@ cout << "Choose a function." << endl << endl;
     while(cin && dontQuit == true){
 
         cout << "Enter numeric option or anything else to exit." << endl;
-
-        choice = user_input();
+        int userInp;
+        cin >> userInp;
+        choice = userInp;
 
         switch(choice){
              
@@ -661,7 +667,7 @@ Person* addSupplemental(Person** head){
 int main(){
 
     //Welcome Message
-    show_WelcomeMsg();
+    //show_WelcomeMsg();
 
     //variable declarations
     bool quit = false; //used in some functions (multiple)
@@ -689,12 +695,13 @@ int main(){
 
     //main menu loop
     //is this even necessary?
+    /*
     while(quit == false && cin){
         quit = menuFunction(quit, head);
     }
-
+*/
     //goodbye
-    show_GoodbyeMSG();
+    //show_GoodbyeMSG();
 
     return 0;
     
