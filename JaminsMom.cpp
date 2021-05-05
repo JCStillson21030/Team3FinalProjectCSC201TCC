@@ -394,59 +394,10 @@ void findParents(person *head, person *current, person *previous){
 void findChildren(person *head, person *current, person *previous){
     cout << "Function 10: Find all the Children of a Person (User Input SSN)." << endl;
     
-    
     string kidname;
     string parentname;
     long personSSN;
-    
-    person* index = NULL; int temp; string temp2; char temp3; string temp4; float temp5; float temp6; long temp7; long temp8;
-    while(current != NULL)      // Why does this work when current is not declared/undefined? 
-    {  
-        index = current->next;  
-
-        while(index != NULL)
-        {  
-            if(current->DOB > index->DOB)
-            {  
-                temp = current->SSN;  
-                current->SSN = index->SSN;  
-                index->SSN = temp; 
-                
-                temp2 = current->pname;
-                current->pname = index->pname;
-                index->pname = temp2;
-                
-                temp3 = current->gender;
-                current->gender = index->gender;
-                index->gender = temp3;
-                
-                temp4 = current->DOB;
-                current->DOB = index->DOB;
-                index->DOB = temp4;
-                
-                temp5 = current->height;
-                current->height = index->height;
-                index->height = temp5;
-                
-                temp6 = current->weight;
-                current->weight = index->weight;
-                index->weight = temp6;
-                
-                temp7 = current->mSSN;
-                current->mSSN = index->mSSN;
-                index->mSSN = temp7;
-                
-                temp8 = current->fSSN;
-                current->fSSN = index->fSSN;
-                index->fSSN = temp8;
-            }  
-            index = index->next;  
-        }  
-        current = current->next;
-    }      
-
-    current = head; 
-    
+ 
     cout << "Please enter the SSN of the person you want to find the children of: "; cin >> personSSN;
     
     while(current != NULL)
@@ -468,7 +419,7 @@ void findChildren(person *head, person *current, person *previous){
             kidname = current->pname;
       
             cout << endl;
-            cout << kidname << " || Born: " << current->DOB << " is the kid of: " << parentname;
+            cout << kidname << " is the kid/kids of: " << parentname;
         }
         // 195483298*/
         current = current->next;
@@ -555,7 +506,7 @@ void findSiblings(){
     {
         if((((current->mSSN == momSSN) && (current->SSN != personSSN)) || ((current->fSSN == dadSSN) && (current->SSN != personSSN))))
         {
-        cout << personname << " has the siblings: " << current->pname << current->DOB << endl;
+        cout << current->pname << " Born || " << current->DOB << endl;
         }
         current = current->next;
     }
