@@ -1,0 +1,611 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+//Person struct declaration module
+struct Person{  
+    
+    string pname;
+    long SSN; 
+
+    char gender; 
+    string DOB;
+    
+    float height; 
+    float weight;
+    
+    long mSSN;
+    long fSSN;
+    
+    Person* next;                                         
+};
+void show_WelcomeMsg(){
+
+}
+void show_GoodbyeMSG(){
+
+}
+//read file and make list
+void populateList(string myPeople, Person* current, Person* newPerson, Person* head){
+
+    ifstream myPersonFile;
+    myPersonFile.open(myPeople);
+
+    string fLine;
+
+    while(!myPersonFile.eof()){
+
+        getline(myPersonFile, fLine);
+        current -> pname = fLine;
+        getline(myPersonFile, fLine);
+        current -> SSN = stol(fLine);
+        getline(myPersonFile, fLine);
+        current -> gender = fLine[0];
+        getline(myPersonFile, fLine);
+        current -> DOB = fLine;
+        getline(myPersonFile, fLine);
+        current -> height = stof(fLine);
+        getline(myPersonFile, fLine);
+        current -> weight = stof(fLine);
+        getline(myPersonFile, fLine);
+        current -> mSSN = stol(fLine);
+        getline(myPersonFile, fLine);
+        current -> fSSN = stol(fLine);
+        
+        newPerson = new Person;
+        current -> next = newPerson;
+        current = newPerson;
+    }
+
+    myPersonFile.close();
+
+    current = head;
+
+    Person* prevPerson;
+
+    while(current -> next != NULL){
+        prevPerson = current;
+        current = current -> next;
+    }
+
+    prevPerson -> next = NULL;
+
+    delete newPerson;
+    
+    current = head;
+
+}
+
+
+//utility usage for counting persons
+int nodeCount(Person* head){
+
+    Person* tmp = head;
+
+    int nodeCount = 0;
+
+    while(tmp != NULL){
+        nodeCount++;
+        tmp = tmp -> next;
+    }
+
+    return nodeCount;
+}
+
+/*
+//utitily usage for swap and sort
+struct person* swapPerson(struct Person* nodeOne, struct Person* nodeTwo){
+    struct Person* tmp = nodeTwo -> next;
+    nodeTwo -> next = nodeOne;
+    nodeOne -> next = tmp;
+    return nodeTwo;
+}
+*/
+
+
+//Creat new person and add to list
+Person* newPerson(Person* current, Person** head){
+    string usrInp;
+
+    cin.ignore();
+
+    int count = 0;
+
+    Person* usrInpPerson = new Person;
+
+    //entering information
+
+    cout << "Enter Name to Add (Format: First Last): ";
+    getline(cin, usrInp);
+    usrInpPerson -> pName = usrInp;
+    cout << "Enter SSN of Person (Format: XXXXXXXXX): ";
+    getline(cin, usrInp);
+    usrInpPerson -> SSN = stol(usrInp);
+    cout << "Enter Gender of Person (Format: M/F Case Sensitive): ";
+    getline(cin, usrInp);
+    usrInpPerson -> gender = usrInp[0];
+    cout << "Enter DOB of Person (Format: yyyy/mm/dd): ";
+    getline(cin, usrInp);
+    usrInpPerson -> DOB = usrInp;
+    cout << "Enter Height of Person (Format: XX.XX): ";
+    getline(cin, usrInp);
+    usrInpPerson -> height = stof(usrInp);
+    cout << "Enter Weight of Person (Format: XXX.XX): ";
+    getline(cin, usrInp);
+    usrInpPerson -> weight = stof(usrInp);
+    cout << "Enter Mother SSN of Person (Format: XXXXXXXXX): ";
+    getline(cin, usrInp);
+    usrInpPerson -> mSSN = stol(usrInp);
+    cout << "Enter Father SSN of Person (Format: XXXXXXXXX): ";
+    getline(cin, usrInp);
+    usrInpPerson -> fSSN = stol(usrInp);
+
+    current = *head;
+
+    struct Person** headPointer;
+
+    headPointer = head;
+
+    while(current -> next != NULL){
+        if(current -> SSN < usrInpPerson -> SSN){
+            if(current -> next -> SSN > usrInpPerson -> SSN){
+                Person* prev = current;
+                usrInpPerson -> next = prev -> next;
+                prev -> next = usrInpPerson;
+                break;
+            }
+        } else{
+            usrInpPerson -> next = (*headPointer);
+            (*headPointer) = usrInpPerson;
+            break;
+        }
+        current = current -> next;
+    }
+    if(current -> next == NULL){
+        usrInpPerson -> next = NULL;
+        current -> next =usrInpPerson;
+    }
+    cout << "New Person has been added to the list!" << endl;
+    cout << "Person " << usrInpPerson -> SSN << " added." << endl;
+    return *head;
+}
+
+//sort by ascending SSN 
+Person* sortSSN(struct Person** head){
+    struct Person** headPointer;
+    int PersonCount = nodeCount(*head);
+
+    bool sorted = false,
+        done = false;
+    
+    for(int i = 0; i <= PersonCount; i++){
+        headPointer = head;
+
+        for(int j = 0; j < (PersonCount - i - 1); j++){
+            struct Person* nodeOne = *headPointer;
+            struct Person* nodeTwo = nodeOne -> next;
+
+            if(nodeOne -> SSN > nodeTwo -> SSN){
+                *headPointer = swapPerson(nodeOne, nodeTwo);
+                sorted = true;
+                done = true;
+            }
+            headPointer = &(*headPointer) -> next;
+        }
+        if(done == false){
+            sorted = true;
+        }
+    }
+    return *head;
+
+}
+
+//sort by age 65+
+void displaySSEligibility(Person* head){
+    Person* current{head};
+
+    cout << "Eligible for Social Security: " << endl;
+
+    while(current -> next != NULL){
+        if(2021 - stoi(current -> DOB.substr(0,4)) >= 65){
+            cout << current -> pname << ": Age: " << 2021 - stoi(current -> DOB.substr(0,4)) << endl;
+        }
+        current = current -> next;
+    }
+}
+
+//Edit Person
+void editPerson(Person* head){
+    Person* current{head};
+
+    long editSSN{0};
+
+    string usrInp;
+    string newData{""};
+
+    cin.ignore();
+
+    cout << "Enter the SSN of the Person you would like to edit: ";
+    getline(cin, usrInp);
+
+    editSSN = stol(usrInp);
+
+    while(current -> next != NULL){
+        if(current -> SSN == usrInp){
+            cout << "SSN is: " << current -> pname << endl;
+            cout << "Edit initialized. Enter 0 to keep orginial information" << endl;
+
+            cout << "Enter new name: ";
+            getline(cin, newData);
+            if(newData[0] != '0'){
+                current -> pname = newData;
+            } else{
+                cout << "Keeping originial information" << endl;
+            }
+            cout << "Enter new SSN: ";
+            getline(cin, newData);
+            if(newData[0] != '0'){
+                current -> SSN = stol(newData);
+            } else{
+                cout << "Keeping originial information" << endl;
+            }
+            cout << "Enter new Gender: ";
+            getline(cin, newData);
+            if(newData[0] != '0'){
+                current -> gender = newData[0];
+            } else{
+                cout << "Keeping originial information" << endl;
+            }
+            cout << "Enter new DOB: ";
+            getline(cin, newData);
+            if(newData[0] != '0'){
+                current -> DOB = newData;
+            } else{
+                cout << "Keeping originial information" << endl;
+            }
+            cout << "Enter new height: ";
+            getline(cin, newData);
+            if(newData[0] != '0'){
+                current -> height = stof(newData);
+            } else{
+                cout << "Keeping originial information" << endl;
+            }
+            cout << "Enter new weight: ";
+            getline(cin, newData);
+            if(newData[0] != '0'){
+                current -> weight = stof(newData);
+            } else{
+                cout << "Keeping originial information" << endl;
+            }
+            cout << "Enter new Mother SSN: ";
+            getline(cin, newData);
+            if(newData[0] != '0'){
+                current -> mSSN = stol(newData);
+            } else{
+                cout << "Keeping originial information" << endl;
+            }
+            cout << "Enter new Father SSN: ";
+            getline(cin, newData);
+            if(newData[0] != '0'){
+                current -> fSSN = stol(newData);
+            } else{
+                cout << "Keeping originial information" << endl;
+            }
+        }
+        current = current -> next;
+    }
+    cout << "Editing Complete" << endl;
+}
+
+//print person nodes
+void print_Persons(Person* head, Person* current){
+
+    current = head;
+
+    cout << endl;
+
+    cout << "Here are the people in a linked list: " << endl;
+
+    while(current != NULL){
+        cout << current -> pname << " | "
+             << current -> SSN << " | "
+             << current -> gender << " | "
+             << current -> DOB << " | "
+             << current -> height << " | "
+             << current -> weight << " | "
+             << current -> mSSN << " | "
+             << current -> fSSN << " | "
+             << endl;
+        current = current -> next;
+    }
+    cout << endl;
+}
+
+//delete person from the list
+Person* deletePerson(Person** head){
+
+    bool keyFound = false;
+
+    string usrInp;
+
+    cin.ignore();
+
+    cout << "Enter the SSN of the person you would like to delete: " << endl;
+
+    getline(cin, usrInp);
+    long key = stol(usrInp);
+
+    Person* tmp = *head;
+    Person* prev = NULL;
+
+    if(tmp != NULL && tmp -> SSN == key){
+        *head = tmp -> next;
+        delete tmp;
+    } else{
+        while(tmp != NULL && tmp -> SSN != key){
+            prev = tmp;
+            tmp = tmp -> next;
+            keyFound = true;
+        }
+    }
+
+    if (tmp == NULL){
+        cout << "Entered SSN was not found." << endl;
+        keyFound = false;
+        cin.ignore();
+        
+        return *head;
+    }
+
+    prev -> next = tmp -> next;
+    delete tmp;
+
+    cout << "Deletion completed." << endl;
+    cout << "Person " << tmp -> SSN << " deleted." << endl;
+
+    return *head;
+}
+
+int usrInp(){
+    int usrInp = 0;
+
+    while(cin >> usrInp){
+        return usrInp;
+    }
+}
+
+//menu
+bool menuFunction(bool quit, Person* head, Person* current){
+
+cout << "Choose a function." << endl << endl;
+
+    int choice = 0;
+    
+    bool dontQuit = true;
+
+//--------------Options------------ 
+    cout << "  1)  Display persons. " << endl;
+    cout << "  2)  Remove a person. " << endl;
+    cout << "  3)  Add a person. " << endl;
+    cout << "  4)  Add new people in bulk by reading supplementary file.  " << endl;
+    cout << "  5)  Edit a person. " << endl;
+    cout << "  6)  Display those eligible for social security (65+). " << endl;
+    cout << "  7)  Display all persons at high risk for cardiovascular disease. (BMI 27+) " << endl;
+    cout << "  8)  Display male:female ratio. " << endl;
+    cout << "  9)  Find parents of a person. " << endl;
+    cout << " 10) Find children of a person. " << endl;
+    cout << " 11) Find siblings of a person. " << endl;
+    cout << " 12) Find uncles, aunts, cousins, nephews, and nieces of a person. " << endl;
+    cout << " 13) Secret Function." << endl;
+    cout << " 99) Repeat Menu." << endl;
+
+//---------------------------------
+
+    while(cin && dontQuit == true){
+
+        cout << "Enter numeric option or anything else to exit." << endl;
+
+        choice = usrInp();
+
+        switch(choice){
+             
+            case 1:
+
+                cout << "Function 1: Display Persons in Ascending SSN Order." << endl;
+
+                sortSSN(&head);
+                print_Persons(head, current);
+
+                break;
+
+            case 2: 
+
+                cout << "Function 2: Remove Person (User Input SSN)." << endl;
+
+                print_Persons(head, current);
+                head = deletePerson(&head);
+                print_Persons(head, current);
+
+                break;
+
+            case 3: 
+
+                cout << "Function 3: Add New Person." << endl;
+
+                newPerson(current, &head);
+                print_Persons(head, current);
+
+                break;
+
+            case 4: 
+
+                cout << "Function 4: Add Persons from Supplemental File." << endl;
+
+                head = addSupplemental(head);
+
+                break;
+
+            case 5: 
+
+                cout << "Function 5: Edit Person." << endl;
+
+                print_Persons(head, current);
+                editPerson(head);
+                print_Persons(head, current);
+
+                break;
+
+            case 6:
+
+                cout << "Function 6: Display All Persons Eligible for Social Security (Over Age 65)." << endl;
+
+                displaySSEligibility(head);
+
+                break;
+
+            case 7: 
+
+                cout << "Function 7: Display All Persons at High Risk of Cardiovascular Disease (BMI 27 and higher)." << endl;
+
+                //incomplete
+
+                break;
+
+            case 8:
+
+                cout << "Function 8: Display the Male to Female Ratio in the County (females per thousand males)." << endl;
+
+                //incomplete
+
+                break;
+
+            case 9:
+
+                cout << "Function 9: Find the Parents of a Person (User Input SSN)." << endl;
+
+                //incomplete
+
+                break;
+
+            case 10: 
+
+                cout << "Function 10: Find all the Children of a Person (User Input SSN)." << endl;
+
+                //incomplete
+
+                break;
+
+            case 11:
+
+                cout << "Function 11: Find all Siblings of a Person (User Input SSN)." << endl;
+
+                //incomplete
+
+                break;
+
+            case 12:
+
+                cout << "Function 12: Find all Uncles, Aunts, Nephews and Nieces of a Person (User Input SSN)." << endl;
+
+                //incomplete
+
+                break;
+
+            case 13: 
+
+                cout << "Function 13: The Sauce" << endl;
+
+                //incomplete
+
+                break;
+
+            case 99:
+
+                cout << "  1)  Display persons. " << endl;
+                cout << "  2)  Remove a person. " << endl;
+                cout << "  3)  Add a person. " << endl;
+                cout << "  4)  Add new people in bulk by reading supplementary file.  " << endl;
+                cout << "  5)  Edit a person. " << endl;
+                cout << "  6)  Display those eligible for social security (65+). " << endl;
+                cout << "  7)  Display all persons at high risk for cardiovascular disease. (BMI 27+) " << endl;
+                cout << "  8)  Display male:female ratio. " << endl;
+                cout << "  9)  Find parents of a person. " << endl;
+                cout << " 10) Find children of a person. " << endl;
+                cout << " 11) Find siblings of a person. " << endl;
+                cout << " 12) Find uncles, aunts, cousins, nephews, and nieces of a person. " << endl;
+                cout << " 13) Secret Function." << endl;
+                cout << " 99) Repeat Menu." << endl;
+
+                break;
+            
+            default: 
+
+                cout << "Goodbye." << endl;
+
+                return dontQuit;
+        }
+    }
+    return dontQuit;
+}
+
+
+int main(){
+
+    //Welcome Message
+    show_WelcomeMsg();
+
+    //variable declarations
+    bool quit = false;
+    string myPeople = "people.txt"; 
+
+    //end variable declarations
+
+    //initialize struct pointers/linked list
+    Person* head = new Person; //independent person
+    head -> next = NULL;
+
+    Person* current = head;
+    Person* newPerson;
+    //End struct pointers/linked list
+
+    //create list using the struct 
+    populateList(myPeople, current, newPerson, head);
+
+    //sort by SSN
+    sortSSN(&head);
+
+    //initial print
+    printPersons(head, current);
+
+    //main menu loop
+    while(quit == false && cin){
+        quit = menuLoop(quit, head, current);
+    }
+
+    //goodbye
+    show_GoodbyeMSG();
+
+    return 0;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
