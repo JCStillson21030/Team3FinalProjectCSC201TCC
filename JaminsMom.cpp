@@ -429,7 +429,7 @@ void findChildren(person *head, person *current, person *previous){
     
     cout << endl;   
 }
-void findSiblings(){
+void findSiblings(person *head, person *current, person *previous){
     cout << "Function 11: Find all Siblings of a Person (User Input SSN)." << endl;
 
 
