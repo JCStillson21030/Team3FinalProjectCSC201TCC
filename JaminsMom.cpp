@@ -302,9 +302,39 @@ void genderRatio(person *head, person *current, person *previous){
     //displayPersons(head, current, previous); 
     
 }
-void findParents(){
+void findParents(person *head, person *current, person *previous){
     cout << "Function 9: Find the Parents of a Person (User Input SSN)." << endl;
-}
+    //only outputs mother
+    string personname;
+    long personSSN;
+    long momSSN;
+    long dadSSN;
+    
+    cout << "Please enter the SSN of the person you want to find the parents of: "; cin >> personSSN;
+    
+    while(current != NULL)
+    {
+        if(current->SSN == personSSN)
+        {
+            personname = current->pname;
+            momSSN = current->mSSN;
+            dadSSN = current->fSSN;
+        }
+        
+        else if(current->SSN == momSSN)
+        {
+            cout << personname << " has the mother: " << current->pname << endl;
+            
+        }
+        
+        else if(current->SSN == dadSSN)
+        {
+            cout << personname << " has the father: " << current->pname << endl;
+            
+        }
+        // 195483298 
+        current = current->next;
+    }
 void findChildren(){
     cout << "Function 10: Find all the Children of a Person (User Input SSN)." << endl;
 }
@@ -421,7 +451,7 @@ else if (choice == 8){
     genderRatio(head, current, previous);
 }
 else if (choice == 9){
-    findParents();
+    findParents(head, current, previous);
 }
 else if (choice == 10){
     findChildren();
