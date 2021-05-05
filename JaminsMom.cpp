@@ -717,7 +717,6 @@ void findRelatives(person *head, person *current, person *previous){
     current = head;
     cout << endl;
 }
-
 main(){
 
 person* head = new person; // independent person 
