@@ -277,8 +277,30 @@ void socialSecurity(person *head, person *current){
 void cardioDisease(){
     cout << "Function 7: Display All Persons at High Risk of Cardiovascular Disease (BMI 27 and higher)." << endl;
 }
-void genderRatio(){
+void genderRatio(person *head, person *current, person *previous){
     cout << "Function 8: Display the Male to Female Ratio in the County (females per thousand males)." << endl;
+    
+    int m = 0;
+    int f = 0;
+    
+    while(current != NULL)
+    {
+        if(current->gender == 'M')
+        {
+           m++;
+        }
+        else f++;
+        current = current->next;
+    }
+    
+    //cout << m << endl;
+    //cout << f << endl;
+    float x = f * 1000;
+    float answer = m / x;
+    cout << "The male to female ratio for every 1000 males to 1 female is: " << answer << endl;
+    
+    //displayPersons(head, current, previous); 
+    
 }
 void findParents(){
     cout << "Function 9: Find the Parents of a Person (User Input SSN)." << endl;
@@ -396,7 +418,7 @@ else if (choice == 7){
     cardioDisease();
 }
 else if (choice == 8){
-    genderRatio();
+    genderRatio(head, current, previous);
 }
 else if (choice == 9){
     findParents();
