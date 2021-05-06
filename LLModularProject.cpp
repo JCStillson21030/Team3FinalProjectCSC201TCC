@@ -20,17 +20,105 @@ struct Person{
     
     Person* next;                                         
 };
+
+//void show_welcomeMsg();
+
+//void show_goodbyeMsg();
+
+//int user_input();                                   // Utility -- user input
+
+bool menuFunction(bool, Person*);                      // Main menu
+
+Person* populateList();                    // Initial dataset
+
+struct Person* swapPerson(struct Person*,          // Utility -- swap nodes
+                           struct Person*);
+
+int nodeCount(Person*);                         // Utility
+
+void printPersons(Person*);                    // Utility
+
+Person* sortSSN(struct Person**);                // Option 1
+
+Person* deletePerson(Person**);                    // Option 2
+
+Person* newPerson(Person**);                  // Option 3
+
+Person* addSupplemental(Person**);                   // Option 4
+
+void editPerson(Person*);                      // Option 5
+
+void displaySSEligibility(Person*);                  // Option 6
+
+
+// End function prototypes
+
+int main(){
+
+    //Welcome Message
+    //show_WelcomeMsg();
+
+    //variable declarations
+    bool quit = false; //used in some functions (multiple)
+    
+    //end variable declarations
+
+    //initialize struct pointers/linked list
+    Person* head = new Person; //independent person
+    head -> next = NULL; //NULL equals the end of the list
+
+    //Person* current = head;
+    //Person* newPerson;
+    //End struct pointers/linked list
+
+    //baseline functions that allow the program to work, getting us to the point of user interaction
+    //create list using the struct 
+    populateList();
+
+    //sort by SSN
+    sortSSN(&head);
+
+    //initial print
+    printPersons(head);
+
+    //main menu loop
+    //is this even necessary?
+    /*
+    while(quit == false && cin){
+        quit = menuFunction(quit, head);
+    }
+*/
+    //goodbye
+    //show_GoodbyeMSG();
+
+    return 0;
+    
+}
+
+
+
+
+
+
+
 void show_WelcomeMsg(){
 
 }
 void show_GoodbyeMSG(){
 
 }
+
 //read file and make list
-void populateList(string myPeople, Person* current, Person* newPerson, Person* head){
+Person* populateList(){
+
+    Person* head = new Person;
+    head -> next = NULL;
+
+    Person* current = head;
+    Person* newPerson;
 
     ifstream myPersonFile;
-    myPersonFile.open(myPeople);
+    myPersonFile.open("people.txt");
 
     string fLine;
 
@@ -75,18 +163,23 @@ void populateList(string myPeople, Person* current, Person* newPerson, Person* h
     
     current = head;
 
+    cout << head -> pname << endl;
+    cout << current -> pname << endl;
+
+    return head;
+
 }
 
 //utility usage for counting persons
 int nodeCount(Person* head){
 
-    Person* tmp = head;
+    Person* temp = head;
 
     int nodeCount = 0;
 
-    while(tmp != NULL){
+    while(temp != NULL){
         nodeCount++;
-        tmp = tmp -> next;
+        temp = temp -> next;
     }
 
     return nodeCount;
@@ -324,31 +417,31 @@ void printPersons(Person* head){
 Person* deletePerson(Person** head){
 
     bool keyFound = false;
-
-    string usrInp;
+    
+    string currentLine;
 
     cin.ignore();
 
     cout << "Enter the SSN of the person you would like to delete: " << endl;
 
-    getline(cin, usrInp);
-    long key = stol(usrInp);
+    getline(cin, currentLine);
+    long key = stol(currentLine);
 
-    Person* tmp = *head;
+    Person* temp = *head;
     Person* prev = NULL;
 
-    if(tmp != NULL && tmp -> SSN == key){
-        *head = tmp -> next;
-        delete tmp;
+    if(temp != NULL && temp -> SSN == key){
+        *head = temp -> next;
+        delete temp;
     } else{
-        while(tmp != NULL && tmp -> SSN != key){
-            prev = tmp;
-            tmp = tmp -> next;
+        while(temp != NULL && temp -> SSN != key){
+            prev = temp;
+            temp = temp -> next;
             keyFound = true;
         }
     }
 
-    if (tmp == NULL){
+    if (temp == NULL){
         cout << "Entered SSN was not found." << endl;
         keyFound = false;
         cin.ignore();
@@ -356,23 +449,83 @@ Person* deletePerson(Person** head){
         return *head;
     }
 
-    prev -> next = tmp -> next;
-    delete tmp;
+    prev -> next = temp -> next;
+    delete temp;
 
     cout << "Deletion completed." << endl;
-    cout << "Person " << tmp -> SSN << " deleted." << endl;
+    cout << "Person " << temp -> SSN << " deleted." << endl;
 
     return *head;
 }
 
 //utility function for the menu selection process
-int usrInp(){
-    int usrInp = 0;
+/*int user_input() {
+    
+    int inp = 0;
+    
+    while (cin >> inp) {
+        
+        return inp;
+    } 
+}*/
 
-    while(cin >> usrInp){
-        return usrInp;
+Person* addSupplemental(Person** head){
+    
+    
+    
+    Person* current = *head; 
+
+    while (current -> next != NULL) {
+        current = current -> next;
+    } 
+    
+    ifstream suppFile;
+    suppFile.open("supplemental.txt");
+
+    string suppLine;
+
+    while (!suppFile.eof()) { 
+        
+        Person* newPerson = new Person;
+        current -> next = newPerson;    
+        current = newPerson;
+        
+        getline(suppFile, suppLine);
+        current -> pname = suppLine;
+        
+        getline(suppFile, suppLine);
+        current -> SSN = stol(suppLine);
+                
+        getline(suppFile, suppLine);
+        current -> gender = suppLine[0]; 
+        
+        getline(suppFile, suppLine);
+        current -> DOB = suppLine; 
+    
+        getline(suppFile, suppLine);
+        current -> height = stof(suppLine);
+
+        getline(suppFile, suppLine);
+        current -> weight = stof(suppLine);
+    
+        getline(suppFile, suppLine);
+        current -> mSSN = stol(suppLine);
+
+        getline(suppFile, suppLine);
+        current -> fSSN = stol(suppLine);
     }
+    
+    suppFile.close();
+    
+    current = *head;
+  
+    cout << "Bulk addition operation successful!" << endl;
+    
+    cout << "Updating database..." << endl;
+    
+    return *head;
 }
+
 
 //menu
 bool menuFunction(bool quit, Person* head){
@@ -404,8 +557,9 @@ cout << "Choose a function." << endl << endl;
     while(cin && dontQuit == true){
 
         cout << "Enter numeric option or anything else to exit." << endl;
-
-        choice = usrInp();
+        int userInp;
+        cin >> userInp;
+        choice = userInp;
 
         switch(choice){
              
@@ -421,6 +575,8 @@ cout << "Choose a function." << endl << endl;
             case 2: 
 
                 cout << "Function 2: Remove Person (User Input SSN)." << endl;
+
+                cin.clear();
 
                 printPersons(head);
                 head = deletePerson(&head);
@@ -442,7 +598,7 @@ cout << "Choose a function." << endl << endl;
                 cout << "Function 4: Add Persons from Supplemental File." << endl;
                 //in evanescencev2
                 
-                head = addSupplemental(head);
+                addSupplemental(&head);
                 sortSSN(&head);
                 printPersons(head);
 
@@ -549,103 +705,6 @@ cout << "Choose a function." << endl << endl;
         }
     }
     return dontQuit;
-}
-
-void addSupplemental(Person** head){
-    string fLine;
-          string fileName = "supplemental.txt";
-    
-    Person* current = *head; 
-
-    while (current -> next != NULL) {
-        current = current -> next;
-    } 
-    
-    ifstream dataFile;
-    dataFile.open(fileName);
-
-    while (!dataFile.eof()) { 
-        
-        Person* newPerson = new Person;
-        current -> next = newPerson;    
-        current = newPerson;
-        
-        getline(dataFile, fLine);
-        current -> pname = fLine;
-        
-        getline(dataFile, fLine);
-        current -> SSN = stol(fLine);
-                
-        getline(dataFile, fLine);
-        current -> gender = fLine[0]; 
-        
-        getline(dataFile, fLine);
-        current -> DOB = fLine; 
-    
-        getline(dataFile, fLine);
-        current -> height = stof(fLine);
-
-        getline(dataFile, fLine);
-        current -> weight = stof(fLine);
-    
-        getline(dataFile, fLine);
-        current -> mSSN = stol(fLine);
-
-        getline(dataFile, fLine);
-        current -> fSSN = stol(fLine);
-    }
-    
-    dataFile.close();
-    
-    current = *head;
-  
-    cout << "Bulk addition operation successful!" << endl;
-    
-    cout << "Updating database..." << endl;
-    
-    return *head;
-}
-
-int main(){
-
-    //Welcome Message
-    show_WelcomeMsg();
-
-    //variable declarations
-    bool quit = false; //used in some functions (multiple)
-    string myPeople = "people.txt"; 
-
-    //end variable declarations
-
-    //initialize struct pointers/linked list
-    Person* head = new Person; //independent person
-    head -> next = NULL; //NULL equals the end of the list
-
-    Person* current = head;
-    Person* newPerson;
-    //End struct pointers/linked list
-
-    //baseline functions that allow the program to work, getting us to the point of user interaction
-    //create list using the struct 
-    populateList(myPeople, current, newPerson, head);
-
-    //sort by SSN
-    sortSSN(&head);
-
-    //initial print
-    printPersons(head);
-
-    //main menu loop
-    /*
-    while(quit == false && cin){
-        quit = menuLoop(quit, head, current);
-    }
-*/
-    //goodbye
-    show_GoodbyeMSG();
-
-    return 0;
-    
 }
 
 
