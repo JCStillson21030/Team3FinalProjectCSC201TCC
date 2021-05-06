@@ -272,20 +272,20 @@ bool menuDisplay(bool quit, Person* head){
     bool dontQuitMenu = true;
 
 //--------------Options------------ 
-    cout << "  1)  Display persons. " << endl;
-    cout << "  2)  Remove a person. " << endl;
-    cout << "  3)  Add a person. " << endl;
-    cout << "  4)  Add new people in bulk by reading supplementary file.  " << endl;
-    cout << "  5)  Edit a person. " << endl;
-    cout << "  6)  Display those eligible for social security (65+). " << endl;
-    cout << "  7)  Display all persons at high risk for cardiovascular disease. (BMI 27+) " << endl;
-    cout << "  8)  Display male:female ratio. " << endl;
-    cout << "  9)  Find parents of a person. " << endl;
-    cout << " 10) Find children of a person. " << endl;
-    cout << " 11) Find siblings of a person. " << endl;
-    cout << " 12) Find uncles, aunts, cousins, nephews, and nieces of a person. " << endl;
-    cout << " 13) Secret Function." << endl;
-    cout << " 99) Repeat Menu." << endl;
+    cout << "  1:  Display Persons in Ascending SSN Order. " << endl;
+    cout << "  2:  Remove Person (User Input SSN). " << endl;
+    cout << "  3:  Add New Person." << endl;
+    cout << "  4:  Add Persons from Supplemental File. " << endl;
+    cout << "  5:  Edit Person (User Input SSN). " << endl;
+    cout << "  6:  Display All Persons Eligible for Social Security (Over Age 65). " << endl;
+    cout << "  7:  Display All Persons at High Risk of Cardiovascular Disease (BMI 27 and higher). " << endl;
+    cout << "  8:  Display the Male to Female Ratio in the County (females per thousand males). " << endl;
+    cout << "  9:  Find the Parents of a Person (User Input SSN)." << endl;
+    cout << " 10:  Find all the Children of a Person (User Input SSN)." << endl;
+    cout << " 11:  Find all Siblings of a Person (User Input SSN)." << endl;
+    cout << " 12:  Find all Uncles, Aunts, Nephews and Nieces of a Person (User Input SSN)." << endl;
+    cout << " 13:  Secret Function." << endl;
+    cout << " 99:  Repeat Menu." << endl;
 
 //---------------------------------
 
