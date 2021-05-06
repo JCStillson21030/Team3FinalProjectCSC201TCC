@@ -39,7 +39,8 @@ void show_goodbyeMsg(){
 
     cout << "Thank you for using the Program." << endl;
     cout << "BMannyB, JasJag, Navelfuzz, Burb, and Junki wish you well ;) " << endl;
-
+    cout << "Special thanks to the Geniuses on Team 4... without whom there is no way" 
+         << "we would have been able to google how to make a recurring switch loop" << endl; 
 };
 //End greeting and salutation modules
 
