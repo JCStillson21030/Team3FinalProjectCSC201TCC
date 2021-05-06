@@ -317,24 +317,71 @@ void cardioDisease(person* head, person *current, person *previous){
     //BMI = WEIGHT IN KG / (HEIGHT IN M)-SQUARED
     // WIGHT IN KG = WEIGHT IN POUNDS * 0.45 ; HEIGHT IN METERS = HEIGHT IN INCHES * 0.0254
     //Formula: 703 x weight (lbs) / [height (in)]^2
+    //cout<<"The BMI of " << mySelf.pname << " is " << ((mySelf.weight) * 0.45) / (((mySelf.height) * 0.0254) * ((mySelf.height) * 0.0254))<<endl;
 
+    float BMI;
+    
+     person* index = NULL; int temp; string temp2; char temp3; string temp4; float temp5; float temp6; long temp7; long temp8;
+    while(current != NULL)      // Why does this work when current is not declared/undefined? 
+    {  
+        index = current->next;  
 
+        while(index != NULL)
+        {  
+            if(current->weight < index->weight)
+            {  
+                temp = current->SSN;  
+                current->SSN = index->SSN;  
+                index->SSN = temp; 
+                
+                temp2 = current->pname;
+                current->pname = index->pname;
+                index->pname = temp2;
+                
+                temp3 = current->gender;
+                current->gender = index->gender;
+                index->gender = temp3;
+                
+                temp4 = current->DOB;
+                current->DOB = index->DOB;
+                index->DOB = temp4;
+                
+                temp5 = current->height;
+                current->height = index->height;
+                index->height = temp5;
+                
+                temp6 = current->weight;
+                current->weight = index->weight;
+                index->weight = temp6;
+                
+                temp7 = current->mSSN;
+                current->mSSN = index->mSSN;
+                index->mSSN = temp7;
+                
+                temp8 = current->fSSN;
+                current->fSSN = index->fSSN;
+                index->fSSN = temp8;
+            }  
+            index = index->next;  
+        }  
+        current = current->next;
+    }      
+
+    current = head; 
+    
     while(current != NULL)      
     {  
-            //cout<<"The BMI of " << current->pname << " is " << ((current->weight) * 0.45) / (((current->height) * 0.0254)) * ((current->height) * 0.0254)<<endl;
-            float BMI = ((current->weight) * 0.45) / (((current->height) * 0.0254)) * ((current->height) * 0.0254);
+        BMI = ((current->weight) * 0.45) / (((current->height) * 0.0254)) * ((current->height) * 0.0254);
+         
+     if(BMI > 26.99)
+        {
             
-            if(BMI >= 27)
-            {
-                cout << "The BMI of " << current->pname << " is " << BMI << endl;
-            }
-            
-            current = current->next;
-            
+        cout << "The BMI of " << current->pname << " is " << BMI << endl;
+        
+        }
+        current = current->next;
     }
-    current = head;
-    
-    
+    current = head;   
 }
 void genderRatio(person *head, person *current, person *previous){
     cout << "Function 8: Display the Male to Female Ratio in the County (females per thousand males)." << endl;
@@ -576,7 +623,7 @@ void findSiblings(person *head, person *current, person *previous){
     {
         if((((current->mSSN == momSSN) && (current->SSN != personSSN)) || ((current->fSSN == dadSSN) && (current->SSN != personSSN))))
         {
-        cout << current->pname << " Born || " << current->DOB << endl;
+        cout << current->pname << " || Born: " << current->DOB << " is the sibling of: " << personname << endl;
         }
         current = current->next;
     }
